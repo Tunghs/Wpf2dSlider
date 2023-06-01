@@ -7,6 +7,47 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        
+        <Grid Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="0"/>
+                <RowDefinition Height="300"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="0"/>
+                <ColumnDefinition Width="300"/>
+            </Grid.ColumnDefinitions>
+
+            <Slider x:Name="xSlider"
+                    Grid.Column="2"
+                    TickPlacement="BottomRight"
+                    TickFrequency="0.05"
+                    Foreground="White"
+                    Minimum="0"
+                    Value="0"
+                    Maximum="1"
+                    IsSnapToTickEnabled="True"/>
+
+            <TextBlock Grid.Column="1" VerticalAlignment="Center"
+                               Text="0" HorizontalAlignment="Center"
+                               Margin="0 -6 0 0"/>
+
+            <Slider x:Name="ySlider"
+                    Grid.Row="2"
+                    Orientation="Vertical"
+                    TickPlacement="BottomRight"
+                     TickFrequency="0.05"
+                    Foreground="White"
+                    Minimum="0"
+                    Value="1"
+                    Maximum="1"
+                    IsSnapToTickEnabled="True"/>
+
+            <Viewbox Grid.Column="2" Grid.Row="2" >
+                <Canvas Background="AliceBlue"
+                        x:Name="CanvasTT"/>
+            </Viewbox>
+        </Grid>
     </Grid>
 </Window>
