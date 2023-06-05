@@ -26,21 +26,26 @@ namespace Wpf2dSlider
 
         private Grid xSliderPanel;
         private TextBlock xSliderValueTbk;
+        private Border xSliderBorder;
 
         private Grid ySliderPanel;
         private TextBlock ySliderValueTbk;
+        private Border ySliderBorder;
+
+        private int xRange = 10;
+        private int yRange = 10;
 
         public MainWindow()
         {
             InitializeComponent();
-            CanvasTT.Width = 10;
-            CanvasTT.Height = 10;
+            CanvasTT.Width = xRange;
+            CanvasTT.Height = yRange;
 
-            xSliderCanvas.Width = 10;
+            xSliderCanvas.Width = xRange;
             xSliderCanvas.Height = 1;
 
             ySliderCanvas.Width = 1;
-            ySliderCanvas.Height = 10;
+            ySliderCanvas.Height = yRange;
 
             InitializeDraggableEllipse();
             CreateSlider();
@@ -51,17 +56,31 @@ namespace Wpf2dSlider
         {
             xSliderPanel = new Grid();
 
+            Border border = new Border();
+            border.CornerRadius = new CornerRadius(0.2, 0.2, 0.2, 0.2);
+            border.Width = 10;
+            border.Height = 0.5;
+            border.BorderBrush = Brushes.Gainsboro;
+            border.BorderThickness = new Thickness(0.05);
+            border.Background = Brushes.Gainsboro;
 
-            Rectangle backgroundRect = new Rectangle();
-            backgroundRect.Width = 10;
-            backgroundRect.Height = 0.5;
-            backgroundRect.Fill = Brushes.Crimson;
-            Canvas.SetTop(backgroundRect, 0.25);
+            xSliderBorder = new Border();
+            xSliderBorder.CornerRadius = new CornerRadius(0.2, 0.2, 0.2, 0.2);
+            xSliderBorder.Width = 0.25;
+            xSliderBorder.Height = 0.5;
+            xSliderBorder.BorderBrush = Brushes.SeaGreen;
+            xSliderBorder.BorderThickness = new Thickness(0.05);
+            xSliderBorder.Background = Brushes.SeaGreen;
 
-            Rectangle rect = new Rectangle();
-            rect.Width = 1;
-            rect.Height = 1;
-            rect.Stroke = Brushes.Black;
+            Canvas.SetTop(xSliderBorder, 0.25);
+            Canvas.SetTop(border, 0.25);
+
+            Ellipse ellipse = new Ellipse();
+            ellipse.Width = 1;
+            ellipse.Height = 1;
+            ellipse.Stroke = Brushes.MediumSeaGreen;
+            ellipse.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
+            ellipse.VerticalAlignment = System.Windows.VerticalAlignment.Center;
 
             xSliderValueTbk = new TextBlock();
             xSliderValueTbk.Text = "0";
@@ -70,27 +89,45 @@ namespace Wpf2dSlider
             xSliderValueTbk.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
             xSliderValueTbk.VerticalAlignment = System.Windows.VerticalAlignment.Center;
 
-            xSliderPanel.Children.Add(rect);
+            xSliderPanel.Children.Add(ellipse);
+            // xSliderPanel.Children.Add(inEllipse);
             xSliderPanel.Children.Add(xSliderValueTbk);
 
-            xSliderCanvas.Children.Add(backgroundRect);
+            xSliderCanvas.Children.Add(border);
+            xSliderCanvas.Children.Add(xSliderBorder);
             xSliderCanvas.Children.Add(xSliderPanel);
+
         }
 
         private void CreatySlider()
         {
             ySliderPanel = new Grid();
 
-            Rectangle backgroundRect = new Rectangle();
-            backgroundRect.Width = 0.5;
-            backgroundRect.Height = 10;
-            backgroundRect.Fill = Brushes.Crimson;
-            Canvas.SetLeft(backgroundRect, 0.25);
+            Border border = new Border();
+            border.CornerRadius = new CornerRadius(0.2, 0.2, 0.2, 0.2);
+            border.Width = 0.5;
+            border.Height = 10;
+            border.BorderBrush = Brushes.Gainsboro;
+            border.BorderThickness = new Thickness(0.05);
+            border.Background = Brushes.Gainsboro;
 
-            Rectangle rect = new Rectangle();
-            rect.Width = 1;
-            rect.Height = 1;
-            rect.Stroke = Brushes.Black;
+            ySliderBorder = new Border();
+            ySliderBorder.CornerRadius = new CornerRadius(0.2, 0.2, 0.2, 0.2);
+            ySliderBorder.Width = 0.5;
+            ySliderBorder.Height = 0.25;
+            ySliderBorder.BorderBrush = Brushes.SeaGreen;
+            ySliderBorder.BorderThickness = new Thickness(0.05);
+            ySliderBorder.Background = Brushes.SeaGreen;
+
+            Canvas.SetLeft(ySliderBorder, 0.25);
+            Canvas.SetLeft(border, 0.25);
+
+            Ellipse ellipse = new Ellipse();
+            ellipse.Width = 1;
+            ellipse.Height = 1;
+            ellipse.Stroke = Brushes.MediumSeaGreen;
+            ellipse.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
+            ellipse.VerticalAlignment = System.Windows.VerticalAlignment.Center;
 
             ySliderValueTbk = new TextBlock();
             ySliderValueTbk.Text = "0";
@@ -99,10 +136,11 @@ namespace Wpf2dSlider
             ySliderValueTbk.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
             ySliderValueTbk.VerticalAlignment = System.Windows.VerticalAlignment.Center;
 
-            ySliderPanel.Children.Add(rect);
+            ySliderPanel.Children.Add(ellipse);
             ySliderPanel.Children.Add(ySliderValueTbk);
 
-            ySliderCanvas.Children.Add(backgroundRect);
+            ySliderCanvas.Children.Add(border);
+            ySliderCanvas.Children.Add(ySliderBorder);
             ySliderCanvas.Children.Add(ySliderPanel);
         }
 
@@ -114,7 +152,7 @@ namespace Wpf2dSlider
                 Height = 1,
                 Fill = Brushes.Transparent,
                 Stroke = Brushes.Blue,
-                StrokeThickness = 0.005
+                StrokeThickness = 0.1
             };
 
             // 마우스 이벤트 처리기 등록
@@ -162,6 +200,7 @@ namespace Wpf2dSlider
                 {
                     Canvas.SetLeft(draggableEllipse, newLeft);
                     Canvas.SetLeft(xSliderPanel, newLeft);
+                    xSliderBorder.Width = newLeft + 0.25;
                     xSliderValueTbk.Text = newLeft.ToString();
                     // xSlider.Value = newLeft;
                 }
@@ -170,6 +209,7 @@ namespace Wpf2dSlider
                 {
                     Canvas.SetTop(draggableEllipse, newTop);
                     Canvas.SetTop(ySliderPanel, newTop);
+                    ySliderBorder.Height = newTop + 0.25;
                     ySliderValueTbk.Text = newTop.ToString();
 
                     // ySlider.Value = 10 - newTop;
