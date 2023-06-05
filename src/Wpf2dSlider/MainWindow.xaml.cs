@@ -24,21 +24,94 @@ namespace Wpf2dSlider
         private bool isDragging;
         private Point offset;
 
+        private Grid xSliderPanel;
+        private TextBlock xSliderValueTbk;
+
+        private Grid ySliderPanel;
+        private TextBlock ySliderValueTbk;
+
         public MainWindow()
         {
             InitializeComponent();
-            CanvasTT.Width = 1;
-            CanvasTT.Height = 1;
+            CanvasTT.Width = 10;
+            CanvasTT.Height = 10;
+
+            xSliderCanvas.Width = 10;
+            xSliderCanvas.Height = 1;
+
+            ySliderCanvas.Width = 1;
+            ySliderCanvas.Height = 10;
 
             InitializeDraggableEllipse();
+            CreateSlider();
+            CreatySlider();
+        }
+
+        private void CreateSlider()
+        {
+            xSliderPanel = new Grid();
+
+
+            Rectangle backgroundRect = new Rectangle();
+            backgroundRect.Width = 10;
+            backgroundRect.Height = 0.5;
+            backgroundRect.Fill = Brushes.Crimson;
+            Canvas.SetTop(backgroundRect, 0.25);
+
+            Rectangle rect = new Rectangle();
+            rect.Width = 1;
+            rect.Height = 1;
+            rect.Stroke = Brushes.Black;
+
+            xSliderValueTbk = new TextBlock();
+            xSliderValueTbk.Text = "0";
+            xSliderValueTbk.Foreground = Brushes.White;
+            xSliderValueTbk.FontSize = 0.4;
+            xSliderValueTbk.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
+            xSliderValueTbk.VerticalAlignment = System.Windows.VerticalAlignment.Center;
+
+            xSliderPanel.Children.Add(rect);
+            xSliderPanel.Children.Add(xSliderValueTbk);
+
+            xSliderCanvas.Children.Add(backgroundRect);
+            xSliderCanvas.Children.Add(xSliderPanel);
+        }
+
+        private void CreatySlider()
+        {
+            ySliderPanel = new Grid();
+
+            Rectangle backgroundRect = new Rectangle();
+            backgroundRect.Width = 0.5;
+            backgroundRect.Height = 10;
+            backgroundRect.Fill = Brushes.Crimson;
+            Canvas.SetLeft(backgroundRect, 0.25);
+
+            Rectangle rect = new Rectangle();
+            rect.Width = 1;
+            rect.Height = 1;
+            rect.Stroke = Brushes.Black;
+
+            ySliderValueTbk = new TextBlock();
+            ySliderValueTbk.Text = "0";
+            ySliderValueTbk.Foreground = Brushes.White;
+            ySliderValueTbk.FontSize = 0.4;
+            ySliderValueTbk.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
+            ySliderValueTbk.VerticalAlignment = System.Windows.VerticalAlignment.Center;
+
+            ySliderPanel.Children.Add(rect);
+            ySliderPanel.Children.Add(ySliderValueTbk);
+
+            ySliderCanvas.Children.Add(backgroundRect);
+            ySliderCanvas.Children.Add(ySliderPanel);
         }
 
         private void InitializeDraggableEllipse()
         {
             draggableEllipse = new Ellipse
             {
-                Width = 0.05,
-                Height = 0.05,
+                Width = 1,
+                Height = 1,
                 Fill = Brushes.Transparent,
                 Stroke = Brushes.Blue,
                 StrokeThickness = 0.005
@@ -82,19 +155,24 @@ namespace Wpf2dSlider
                 // 마우스 드래그 시 동그라미 위치 업데이트
                 Point currentPosition = e.GetPosition(CanvasTT);
 
-                double newLeft = currentPosition.X - offset.X;
-                double newTop = currentPosition.Y - offset.Y;
+                double newLeft = (int)(currentPosition.X - offset.X);
+                double newTop = (int)(currentPosition.Y - offset.Y);
 
                 if (newLeft >= 0 && newLeft <= CanvasTT.ActualWidth - draggableEllipse.Width)
                 {
                     Canvas.SetLeft(draggableEllipse, newLeft);
-                    xSlider.Value = newLeft;
+                    Canvas.SetLeft(xSliderPanel, newLeft);
+                    xSliderValueTbk.Text = newLeft.ToString();
+                    // xSlider.Value = newLeft;
                 }
 
                 if (newTop >= 0 && newTop <= CanvasTT.ActualHeight - draggableEllipse.Height)
                 {
                     Canvas.SetTop(draggableEllipse, newTop);
-                    ySlider.Value = 1 - newTop;
+                    Canvas.SetTop(ySliderPanel, newTop);
+                    ySliderValueTbk.Text = newTop.ToString();
+
+                    // ySlider.Value = 10 - newTop;
                 }
 
                 Console.WriteLine($"{newLeft}, {newTop}");
