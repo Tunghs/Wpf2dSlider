@@ -150,9 +150,7 @@ namespace Wpf2dSlider
             {
                 Width = 1,
                 Height = 1,
-                Fill = Brushes.Transparent,
-                Stroke = Brushes.Blue,
-                StrokeThickness = 0.1
+                Fill = Brushes.SeaGreen
             };
 
             // 마우스 이벤트 처리기 등록
@@ -160,9 +158,21 @@ namespace Wpf2dSlider
             draggableEllipse.MouseLeftButtonUp += DraggableEllipse_MouseLeftButtonUp;
             draggableEllipse.MouseMove += DraggableEllipse_MouseMove;
             draggableEllipse.MouseRightButtonDown += DraggableEllipse_MouseRightButtonDown;
+            draggableEllipse.MouseEnter += DraggableEllipse_MouseEnter;
+            draggableEllipse.MouseLeave += DraggableEllipse_MouseLeave;
 
             // Canvas에 동그라미 추가
             CanvasTT.Children.Add(draggableEllipse);
+        }
+
+        private void DraggableEllipse_MouseLeave(object sender, MouseEventArgs e)
+        {
+            draggableEllipse.Fill = Brushes.SeaGreen;
+        }
+
+        private void DraggableEllipse_MouseEnter(object sender, MouseEventArgs e)
+        {
+            draggableEllipse.Fill = Brushes.MediumSeaGreen;
         }
 
         private void DraggableEllipse_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
