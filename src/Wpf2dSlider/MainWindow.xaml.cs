@@ -86,18 +86,23 @@ namespace Wpf2dSlider
             ellipse.Stroke = fill;
             ellipse.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
             ellipse.VerticalAlignment = System.Windows.VerticalAlignment.Center;
+
+            // 이벤트 추가
+
             return ellipse;
         }
 
+
+
         private TextBlock CreateValueTextBlock(string text, double fontSize, Brush foreground)
         {
-            xSliderValueTbk = new TextBlock();
-            xSliderValueTbk.Text = text;
-            xSliderValueTbk.Foreground = foreground;
-            xSliderValueTbk.FontSize = fontSize;
-            xSliderValueTbk.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
-            xSliderValueTbk.VerticalAlignment = System.Windows.VerticalAlignment.Center;
-            return xSliderValueTbk;
+            TextBlock textBlock = new TextBlock();
+            textBlock.Text = text;
+            textBlock.Foreground = foreground;
+            textBlock.FontSize = fontSize;
+            textBlock.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
+            textBlock.VerticalAlignment = System.Windows.VerticalAlignment.Center;
+            return textBlock;
         }
 
         private void CreateSlider()
@@ -190,8 +195,11 @@ namespace Wpf2dSlider
 
         private void DraggableEllipse_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
-            Canvas.SetLeft(draggableEllipse, CanvasTT.ActualWidth / 2 - draggableEllipse.Width / 2);
-            Canvas.SetTop(draggableEllipse, CanvasTT.ActualHeight / 2 - draggableEllipse.Height / 2);
+            double leftPos = CanvasTT.ActualWidth / 2 - draggableEllipse.Width / 2;
+            double topPos = CanvasTT.ActualHeight / 2 - draggableEllipse.Height / 2;
+
+            UpdatePosition(leftPos, -1);
+            UpdatePosition(-1, topPos);
         }
 
         private void DraggableEllipse_MouseMove(object sender, MouseEventArgs e)
@@ -201,29 +209,41 @@ namespace Wpf2dSlider
                 // 마우스 드래그 시 동그라미 위치 업데이트
                 Point currentPosition = e.GetPosition(CanvasTT);
 
-                double newLeft = (int)(currentPosition.X - offset.X);
-                double newTop = (int)(currentPosition.Y - offset.Y);
+                double leftPos = (int)(currentPosition.X - offset.X);
+                double topPos = (int)(currentPosition.Y - offset.Y);
 
-                if (newLeft >= 0 && newLeft <= CanvasTT.ActualWidth - draggableEllipse.Width)
+                if (leftPos >= 0 && leftPos <= CanvasTT.ActualWidth - draggableEllipse.Width)
                 {
-                    Canvas.SetLeft(draggableEllipse, newLeft);
-                    Canvas.SetLeft(xSliderPanel, newLeft);
-                    xSliderBorder.Width = newLeft + 0.25;
-                    xSliderValueTbk.Text = newLeft.ToString();
-                    // xSlider.Value = newLeft;
+                    UpdatePosition(leftPos, -1);
                 }
 
-                if (newTop >= 0 && newTop <= CanvasTT.ActualHeight - draggableEllipse.Height)
+                if (topPos >= 0 && topPos <= CanvasTT.ActualHeight - draggableEllipse.Height)
                 {
-                    Canvas.SetTop(draggableEllipse, newTop);
-                    Canvas.SetTop(ySliderPanel, newTop);
-                    ySliderBorder.Height = newTop + 0.25;
-                    ySliderValueTbk.Text = newTop.ToString();
-
-                    // ySlider.Value = 10 - newTop;
+                    UpdatePosition(-1, topPos);
                 }
 
-                Console.WriteLine($"{newLeft}, {newTop}");
+                Console.WriteLine($"{leftPos}, {topPos}");
+            }
+        }
+
+        private void UpdatePosition(double leftPos, double topPos)
+        {
+            if (leftPos >= 0)
+            {
+                Canvas.SetLeft(draggableEllipse, leftPos);
+                Canvas.SetLeft(xSliderPanel, leftPos);
+                xSliderBorder.Width = leftPos + 0.25;
+                xSliderValueTbk.Text = leftPos.ToString();
+
+                Console.WriteLine($"업데이트! {leftPos}");
+            }
+
+            if (topPos >= 0)
+            {
+                Canvas.SetTop(draggableEllipse, topPos);
+                Canvas.SetTop(ySliderPanel, topPos);
+                ySliderBorder.Height = topPos + 0.25;
+                ySliderValueTbk.Text = topPos.ToString();
             }
         }
 
