@@ -106,14 +106,29 @@ namespace Wpf2dSlider
                 double leftPos = (int)(currentPosition.X - offset.X);
                 double topPos = (int)(currentPosition.Y - offset.Y);
 
+                if (leftPos + topPos == 0)
+                {
+                    UpdatePosition(0, 0);
+                }
+                else
+                {
+                    if (leftPos > topPos && leftPos <= canvas.ActualWidth - ellipse.Width)
+                    {
+                        UpdatePosition(leftPos, -1);
+                    }
+                }
                 if (leftPos >= 0 && leftPos <= canvas.ActualWidth - ellipse.Width)
                 {
                     UpdatePosition(leftPos, -1);
+
+                    Console.WriteLine($"x 슬라이더 {leftPos}");
                 }
 
                 if (topPos >= 0 && topPos <= canvas.ActualHeight - ellipse.Height)
                 {
                     UpdatePosition(-1, topPos);
+
+                    Console.WriteLine($"y 슬라이더 {topPos}");
                 }
             }
         }
@@ -263,8 +278,6 @@ namespace Wpf2dSlider
                 {
                     UpdatePosition(-1, topPos);
                 }
-
-                Console.WriteLine($"{leftPos}, {topPos}");
             }
         }
 
