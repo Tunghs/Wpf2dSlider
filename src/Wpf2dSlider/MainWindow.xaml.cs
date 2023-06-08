@@ -88,11 +88,52 @@ namespace Wpf2dSlider
             ellipse.VerticalAlignment = System.Windows.VerticalAlignment.Center;
 
             // 이벤트 추가
+            ellipse.MouseLeftButtonDown += Ellipse_MouseLeftButtonDown;
+            ellipse.MouseLeftButtonUp += Ellipse_MouseLeftButtonUp;
+            ellipse.MouseMove += Ellipse_MouseMove;
 
             return ellipse;
         }
 
+        private void Ellipse_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (isDragging)
+            {
+                var ellipse = sender as Ellipse;
+                var canvas = (Canvas)((Grid)ellipse.Parent).Parent;
+                Point currentPosition = e.GetPosition(canvas);
 
+                double leftPos = (int)(currentPosition.X - offset.X);
+                double topPos = (int)(currentPosition.Y - offset.Y);
+
+                if (leftPos >= 0 && leftPos <= canvas.ActualWidth - ellipse.Width)
+                {
+                    UpdatePosition(leftPos, -1);
+                }
+
+                if (topPos >= 0 && topPos <= canvas.ActualHeight - ellipse.Height)
+                {
+                    UpdatePosition(-1, topPos);
+                }
+            }
+        }
+
+        private void Ellipse_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            isDragging = false;
+
+            var ellipse = sender as Ellipse;
+            ellipse.ReleaseMouseCapture();
+        }
+
+        private void Ellipse_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            isDragging = true;
+
+            var ellipse = sender as Ellipse;
+            ellipse.CaptureMouse();
+            offset = e.GetPosition(ellipse);
+        }
 
         private TextBlock CreateValueTextBlock(string text, double fontSize, Brush foreground)
         {
@@ -102,6 +143,7 @@ namespace Wpf2dSlider
             textBlock.FontSize = fontSize;
             textBlock.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
             textBlock.VerticalAlignment = System.Windows.VerticalAlignment.Center;
+            textBlock.IsHitTestVisible = false;
             return textBlock;
         }
 
@@ -234,8 +276,6 @@ namespace Wpf2dSlider
                 Canvas.SetLeft(xSliderPanel, leftPos);
                 xSliderBorder.Width = leftPos + 0.25;
                 xSliderValueTbk.Text = leftPos.ToString();
-
-                Console.WriteLine($"업데이트! {leftPos}");
             }
 
             if (topPos >= 0)
