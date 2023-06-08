@@ -7,7 +7,40 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Grid Grid.Row="2" Width="300" Height="300">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Width: "
+                           VerticalAlignment="Center"/>
+                <TextBox x:Name="BaseGridWidthTbx"
+                         Width="80"/>
+                <TextBlock Margin="10 0 0 0"
+                           Text="Height: "
+                           VerticalAlignment="Center"/>
+                <TextBox x:Name="BaseGridHeightTbx" 
+                         Width="80"/>
+
+                <TextBlock Margin="10 0 0 0"
+                           Text="X Value: "
+                           VerticalAlignment="Center"/>
+                <TextBox Width="80"/>
+                <TextBlock Margin="10 0 0 0"
+                           Text="Y Value: "
+                           VerticalAlignment="Center"/>
+                <TextBox Width="80"/>
+
+                <Button Margin="10 0 0 0"
+                        Content="Apply" Width="120"
+                        Click="Button_Click"/>
+            </StackPanel>
+        </Grid>
+        
+        <Grid x:Name="BaseGrid"
+              Grid.Row="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="0"/>

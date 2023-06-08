@@ -35,6 +35,9 @@ namespace Wpf2dSlider
         private int xRange = 10;
         private int yRange = 10;
 
+        private int baseGridWidth = 300;
+        private int baseGridHeight = 300;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -46,95 +49,90 @@ namespace Wpf2dSlider
 
             ySliderCanvas.Width = 1;
             ySliderCanvas.Height = yRange;
+            
+            SetBaseValues();
 
             InitializeDraggableEllipse();
             CreateSlider();
             CreatySlider();
         }
 
+        private void SetBaseValues()
+        {
+            BaseGridWidthTbx.Text = baseGridWidth.ToString();
+            BaseGridHeightTbx.Text = baseGridHeight.ToString();
+
+            BaseGrid.Width = baseGridWidth;
+            BaseGrid.Height = baseGridHeight;
+        }
+
+        private Border CreateBorder(double width, double height, Brush fill)
+        {
+            Border border = new Border();
+            border.CornerRadius = new CornerRadius(0.2, 0.2, 0.2, 0.2);
+            border.Width = width;
+            border.Height = height;
+            border.BorderBrush = fill;
+            border.BorderThickness = new Thickness(0.05);
+            border.Background = fill;
+            return border;
+        }
+
+        private Ellipse CreateEllipse(double width, double height, Brush fill)
+        {
+            Ellipse ellipse = new Ellipse();
+            ellipse.Width = width;
+            ellipse.Height = height;
+            ellipse.Stroke = fill;
+            ellipse.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
+            ellipse.VerticalAlignment = System.Windows.VerticalAlignment.Center;
+            return ellipse;
+        }
+
+        private TextBlock CreateValueTextBlock(string text, double fontSize, Brush foreground)
+        {
+            xSliderValueTbk = new TextBlock();
+            xSliderValueTbk.Text = text;
+            xSliderValueTbk.Foreground = foreground;
+            xSliderValueTbk.FontSize = fontSize;
+            xSliderValueTbk.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
+            xSliderValueTbk.VerticalAlignment = System.Windows.VerticalAlignment.Center;
+            return xSliderValueTbk;
+        }
+
         private void CreateSlider()
         {
             xSliderPanel = new Grid();
 
-            Border border = new Border();
-            border.CornerRadius = new CornerRadius(0.2, 0.2, 0.2, 0.2);
-            border.Width = 10;
-            border.Height = 0.5;
-            border.BorderBrush = Brushes.Gainsboro;
-            border.BorderThickness = new Thickness(0.05);
-            border.Background = Brushes.Gainsboro;
-
-            xSliderBorder = new Border();
-            xSliderBorder.CornerRadius = new CornerRadius(0.2, 0.2, 0.2, 0.2);
-            xSliderBorder.Width = 0.25;
-            xSliderBorder.Height = 0.5;
-            xSliderBorder.BorderBrush = Brushes.SeaGreen;
-            xSliderBorder.BorderThickness = new Thickness(0.05);
-            xSliderBorder.Background = Brushes.SeaGreen;
+            Border border = CreateBorder(10, 0.5, Brushes.Gainsboro);
+            xSliderBorder = CreateBorder(0.25, 0.5, Brushes.SeaGreen);
 
             Canvas.SetTop(xSliderBorder, 0.25);
             Canvas.SetTop(border, 0.25);
 
-            Ellipse ellipse = new Ellipse();
-            ellipse.Width = 1;
-            ellipse.Height = 1;
-            ellipse.Stroke = Brushes.MediumSeaGreen;
-            ellipse.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
-            ellipse.VerticalAlignment = System.Windows.VerticalAlignment.Center;
-
-            xSliderValueTbk = new TextBlock();
-            xSliderValueTbk.Text = "0";
-            xSliderValueTbk.Foreground = Brushes.White;
-            xSliderValueTbk.FontSize = 0.4;
-            xSliderValueTbk.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
-            xSliderValueTbk.VerticalAlignment = System.Windows.VerticalAlignment.Center;
+            Ellipse ellipse = CreateEllipse(1, 1, Brushes.MediumSeaGreen);
+            xSliderValueTbk = CreateValueTextBlock("0", 0.4, Brushes.White);
 
             xSliderPanel.Children.Add(ellipse);
-            // xSliderPanel.Children.Add(inEllipse);
             xSliderPanel.Children.Add(xSliderValueTbk);
 
             xSliderCanvas.Children.Add(border);
             xSliderCanvas.Children.Add(xSliderBorder);
             xSliderCanvas.Children.Add(xSliderPanel);
-
         }
 
         private void CreatySlider()
         {
             ySliderPanel = new Grid();
 
-            Border border = new Border();
-            border.CornerRadius = new CornerRadius(0.2, 0.2, 0.2, 0.2);
-            border.Width = 0.5;
-            border.Height = 10;
-            border.BorderBrush = Brushes.Gainsboro;
-            border.BorderThickness = new Thickness(0.05);
-            border.Background = Brushes.Gainsboro;
-
-            ySliderBorder = new Border();
-            ySliderBorder.CornerRadius = new CornerRadius(0.2, 0.2, 0.2, 0.2);
-            ySliderBorder.Width = 0.5;
-            ySliderBorder.Height = 0.25;
-            ySliderBorder.BorderBrush = Brushes.SeaGreen;
-            ySliderBorder.BorderThickness = new Thickness(0.05);
-            ySliderBorder.Background = Brushes.SeaGreen;
+            Border border = CreateBorder(0.5, 10, Brushes.Gainsboro);
+            ySliderBorder = CreateBorder(0.5, 0.25, Brushes.SeaGreen);
 
             Canvas.SetLeft(ySliderBorder, 0.25);
             Canvas.SetLeft(border, 0.25);
 
-            Ellipse ellipse = new Ellipse();
-            ellipse.Width = 1;
-            ellipse.Height = 1;
-            ellipse.Stroke = Brushes.MediumSeaGreen;
-            ellipse.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
-            ellipse.VerticalAlignment = System.Windows.VerticalAlignment.Center;
-
-            ySliderValueTbk = new TextBlock();
-            ySliderValueTbk.Text = "0";
-            ySliderValueTbk.Foreground = Brushes.White;
-            ySliderValueTbk.FontSize = 0.4;
-            ySliderValueTbk.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
-            ySliderValueTbk.VerticalAlignment = System.Windows.VerticalAlignment.Center;
+            Ellipse ellipse = CreateEllipse(1, 1, Brushes.MediumSeaGreen);
+            ySliderValueTbk = CreateValueTextBlock("0", 0.4, Brushes.White);
 
             ySliderPanel.Children.Add(ellipse);
             ySliderPanel.Children.Add(ySliderValueTbk);
@@ -227,6 +225,15 @@ namespace Wpf2dSlider
 
                 Console.WriteLine($"{newLeft}, {newTop}");
             }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            int.TryParse(BaseGridWidthTbx.Text, out int baseGridWidth);
+            int.TryParse(BaseGridHeightTbx.Text, out int baseGridHeight);
+
+            BaseGrid.Width = baseGridWidth;
+            BaseGrid.Height = baseGridHeight;
         }
     }
 }
