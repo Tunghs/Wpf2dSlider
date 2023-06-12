@@ -7,6 +7,21 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Viewbox x:Name="negativeSliderVbx">
+            <Canvas x:Name="negativeSliderCvs"/>
+        </Viewbox>
+
+        <TextBlock Grid.Column="1"/>
+
+        <Viewbox x:Name="positiveSliderVbx"
+                 Grid.Column="2">
+            <Canvas x:Name="positiveSliderCvs"/>
+        </Viewbox>
     </Grid>
 </Window>
