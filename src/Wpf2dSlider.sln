@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wpf2dSlider", "Wpf2dSlider\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wpf2vSlider", "Wpf2vSlider\Wpf2vSlider.csproj", "{A820D880-3FEA-48F7-AD2B-E12F0176A179}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SequenceViewer", "SequenceViewer\SequenceViewer.csproj", "{B37B1D19-CF9F-419B-B1C6-C0A67D1CBA62}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{A820D880-3FEA-48F7-AD2B-E12F0176A179}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A820D880-3FEA-48F7-AD2B-E12F0176A179}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A820D880-3FEA-48F7-AD2B-E12F0176A179}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B37B1D19-CF9F-419B-B1C6-C0A67D1CBA62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B37B1D19-CF9F-419B-B1C6-C0A67D1CBA62}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B37B1D19-CF9F-419B-B1C6-C0A67D1CBA62}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B37B1D19-CF9F-419B-B1C6-C0A67D1CBA62}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
