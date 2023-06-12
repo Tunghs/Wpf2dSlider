@@ -116,20 +116,24 @@ namespace Wpf2dSlider
                     {
                         UpdatePosition(leftPos, -1);
                     }
+                    else
+                    {
+                        UpdatePosition(-1, topPos);
+                    }
                 }
-                if (leftPos >= 0 && leftPos <= canvas.ActualWidth - ellipse.Width)
-                {
-                    UpdatePosition(leftPos, -1);
+                //if (leftPos >= 0 && leftPos <= canvas.ActualWidth - ellipse.Width)
+                //{
+                //    UpdatePosition(leftPos, -1);
 
-                    Console.WriteLine($"x 슬라이더 {leftPos}");
-                }
+                //    Console.WriteLine($"x 슬라이더 {leftPos}");
+                //}
 
-                if (topPos >= 0 && topPos <= canvas.ActualHeight - ellipse.Height)
-                {
-                    UpdatePosition(-1, topPos);
+                //if (topPos >= 0 && topPos <= canvas.ActualHeight - ellipse.Height)
+                //{
+                //    UpdatePosition(-1, topPos);
 
-                    Console.WriteLine($"y 슬라이더 {topPos}");
-                }
+                //    Console.WriteLine($"y 슬라이더 {topPos}");
+                //}
             }
         }
 
