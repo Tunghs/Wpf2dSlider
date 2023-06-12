@@ -83,8 +83,7 @@ namespace SequenceViewer
         private void Grid1_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             var pair = (KeyValuePair<string, int>)((Grid)sender).DataContext;
-            
-            MessageBox.Show(pair.Key);
+
         }
 
         private T FindChild<T>(DependencyObject parent, string name) where T : DependencyObject
