@@ -40,7 +40,6 @@ namespace ImageDragAndDrop
             {
                 grid.MouseMove += Grid2_MouseMove;
                 grid.Drop += Grid2_Drop;
-
                 int index = int.Parse(grid.Tag.ToString());
 
                 ((Image)grid.Children[0]).Source = new BitmapImage(new Uri(imagePaths[index], UriKind.Absolute));
