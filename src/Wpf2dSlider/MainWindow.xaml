@@ -42,14 +42,14 @@
         <Grid x:Name="BaseGrid"
               Grid.Row="2">
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="1*"/>
                 <RowDefinition Height="0"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="9*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="30"/>
+                <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="0"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="9*"/>
             </Grid.ColumnDefinitions>
 
             <Viewbox x:Name="xSliderVbx"
